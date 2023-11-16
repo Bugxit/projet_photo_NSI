@@ -16,13 +16,6 @@ if file == "":
 else:
     im = Image.open(f"./{file}")
     
-def completion_percentage(x,y):
-    global percentage_save
-    if round(((x+y*im.width)*100)/(im.width*im.height)) == percentage_save +1:
-        os.system('cls')
-        percentage_save = round((x+y*im.width)*100/(im.width*im.height))
-        print(percentage_save, "% completed")
-
 def color_change():
     for x, y in tool.product(range(im.width), range(im.height)):
         save_color_list = [0 ,0 ,0]
@@ -31,7 +24,6 @@ def color_change():
 
 def gray_change():
     for x, y in tool.product(range(im.width), range(im.height)):
-        completion_percentage(x, y)
         gray_rgb_value = round((im.getpixel((x, y))[0] + im.getpixel((x, y))[1] + im.getpixel((x, y))[2])/3)
         im.putpixel((x,y), (gray_rgb_value, gray_rgb_value, gray_rgb_value))
 
@@ -71,7 +63,13 @@ def color_k():
 def color_255():
     for x, y in tool.product(range(im.width),range(im.height)):
         im.putpixel((x,y),(m.floor(im.getpixel((x,y))[0]/31.875)*32,m.floor(im.getpixel((x,y))[1]/31.875)*32,m.floor(im.getpixel((x,y))[2]/31.875)*32))
-    
+
+def special_change():
+    for x, y in tool.product(range(im.width), range(im.height)):
+        save_color_list = [0 ,0 ,0]
+        save_color_list[filter_color] = im.getpixel((x,y))[filter_color]
+        im.putpixel((x,y),(save_color_list[0],save_color_list[1],save_color_list[2]))
+
 print("Voici les filtres disponibles :")
 for number_filter, filter in enumerate(filter_list):
     print(f'{number_filter} - {filter}')
