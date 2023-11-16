@@ -64,10 +64,10 @@ def color_255():
     for x, y in tool.product(range(im.width),range(im.height)):
         im.putpixel((x,y),(m.floor(im.getpixel((x,y))[0]/31.875)*32,m.floor(im.getpixel((x,y))[1]/31.875)*32,m.floor(im.getpixel((x,y))[2]/31.875)*32))
 
-def special_change():
+def special_change(n):
     for x, y in tool.product(range(im.width), range(im.height)):
         save_color_list = [0 ,0 ,0]
-        save_color_list[filter_color] = im.getpixel((x,y))[filter_color]
+        save_color_list[n] = 255-im.getpixel((x,y))[n]
         im.putpixel((x,y),(save_color_list[0],save_color_list[1],save_color_list[2]))
 
 print("Voici les filtres disponibles :")
@@ -91,6 +91,8 @@ elif filter_color == 8:
     color_k()
 elif filter_color == 9:
     color_255()
+elif filter_color in [10, 20, 30]:
+    special_change(int(fliter_color/10))
 else:
     print('invalid filter')
     exit()
